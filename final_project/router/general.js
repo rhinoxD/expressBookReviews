@@ -11,7 +11,7 @@ public_users.post("/register", (req, res) => {
     if (!isValid(username)) {
       users.push({ username, password });
 
-      return res.status(200).json({ message: `User ${username} registered` });
+      return res.status(200).json({ message: 'Customer successfully registered, now you can login.' });
     }
     else {
       return res.status(400).json({ message: `User ${username} already registered` });
@@ -33,7 +33,7 @@ function getBooks() {
 public_users.get('/', async function(_, res) {
   const bks = await getBooks();
 
-  res.send(JSON.stringify(bks));
+  res.send({books: bks});
 });
 
 function getByISBN(isbn) {
@@ -60,7 +60,7 @@ public_users.get('/author/:author', async function(req, res) {
   const bookEntries = await getBooks();
   const filteredBooks = Object.values(bookEntries).filter((book) => book.author === author);
 
-  res.send(filteredBooks);
+  res.send({booksbyauthor: filteredBooks});
 });
 
 // Get all books based on title
@@ -69,7 +69,7 @@ public_users.get('/title/:title', async function(req, res) {
   const bookEntries = await getBooks();
   const filteredBooks = Object.values(bookEntries).filter((book) => book.title === title);
 
-  res.send(filteredBooks);
+  res.send({booksbytitle: filteredBooks});
 });
 
 //  Get book review
